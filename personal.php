@@ -1,0 +1,109 @@
+<?php
+session_start();
+if(isset($_SESSION['usuario'])== null){
+    Header('Location: index.php');
+}
+include_once('./conf/conf.php');
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Personal</title>
+    <style>
+        .contenido{
+            margin: 40px
+        }
+    </style>
+</head>
+<body>
+    <?php
+    include_once('nav.php');
+    $consulta= "SELECT * FROM personal";
+    $ejecutar_consulta= mysqli_query($con, $consulta);
+    $i=1;
+    ?>
+    <div class="contenido">
+        <br>
+        <a href="agregar-personal.php" class="btn btn-success">Nuevo Personal</a>
+        <br>
+        <table class="table">
+            <tr>
+                <th>N°</th>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Dui</th>
+                <th>Fecha de nacimiento</th>
+                <th>Departamento</th>
+                <th>Distrito</th>
+                <th>Colonia</th>
+                <th>Calle</th>
+                <th>Casa</th>
+                <th>Imagen</th>
+                <th>Feche de registro</th>
+                <th>Acción</th>
+                <th></th>
+            </tr>
+            <?php
+            while($lista= mysqli_fetch_array($ejecutar_consulta)){
+            ?>
+            <tr>
+                <td>
+                    <?php echo $i++ ?>
+                </td>
+                <td>
+                    <?php echo $lista['nombre'] ?>
+                </td>
+                <td>
+                    <?php echo $lista['telefono'] ?>
+                </td>
+                <td>
+                    <?php echo $lista['dui'] ?>
+                </td>
+                <td>
+                    <?php echo $lista['fecha_nacimiento'] ?>
+                </td>
+                <td>
+                    <?php echo $lista['departamento'] ?>
+                </td>
+                <td>
+                    <?php echo $lista['distrito'] ?>
+                </td>
+                <td>
+                    <?php echo $lista['colonia'] ?>
+                </td>
+                <td>
+                    <?php echo $lista['calle'] ?>
+                </td>
+                <td>
+                    <?php echo $lista['casa'] ?>
+                </td>
+                <td>
+                    <img src="<?php echo $lista['imagen']; ?>" alt="avatar" width="50" height="50"> 
+                </td>
+                <td>
+                    <?php echo $lista['fecha_registro'] ?>
+                </td>
+                <td>
+                    <a href="editar-personal.php?id= <?php echo $lista['id'] ?>" class="btn btn-primary" value="Editar">Editar</a>
+                </td>
+                <td>
+                    <form action="eliminar-personal.php" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $lista['id'] ?>">
+                        <button  class="btn btn-danger" >Eliminar</button>
+                    </form>
+                </td>
+            <?php
+                }
+            ?>
+        </table>
+    </div>
+    <?php
+    
+    mysqli_close($con);
+    ?>
+</body>
+</html>
