@@ -58,7 +58,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         (NULL, '$nombre', '$usuario','$passformat')";
         $ejecucion= mysqli_query($con, $insertar);
             if($ejecucion){
-            header('Location: usuarios.php');
+            header('Location: usuario.php');
             }else{
             header('Location: agregar-usuario.php');
             }
