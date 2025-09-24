@@ -10,6 +10,8 @@
     <input type="file" name="foto">
     <input type="submit" value="enviar">
     </form>
+
+    
 </body>
 </html>
 <?php

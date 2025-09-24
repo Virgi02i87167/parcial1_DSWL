@@ -50,7 +50,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             if($ejecucion){
                 header('Location: personal.php');
             }else{
-            header('Location: agregar-personal.php');
+                header('Location: agregar-personal.php');
             }
     }
 }
